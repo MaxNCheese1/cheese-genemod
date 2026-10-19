@@ -1495,9 +1495,9 @@ dev_tools = false
 
   dark_mode_background = [57, 50, 36]
   light_mode_background = [206, 194, 168]
-  dark_mode_clan_symbols = [239, 229, 206]
+  dark_mode_clan_symbols = [115, 84, 41]
   light_mode_clan_symbols = [87, 76, 45]
-  dark_mode_event_alternate = [87, 76, 55]
+  dark_mode_event_alternate = [115, 84, 41]
   light_mode_event_alternate = [167, 148, 111]
 
   fade = [23, 20, 15, 192]
