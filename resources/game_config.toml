@@ -40,10 +40,10 @@ dev_tools = false
 # settings regarding relationship events, also called "interactions"
 [relationship]
   # sets the max amount of interactions a cat can have each moon
-  max_interaction = 4
+  max_interaction = 3
 
   # sets the max amount of interactions a cat with a special role (leader, deputy, medicine cat, or mediator) can have each moon
-  max_interaction_special = 6
+  max_interaction_special = 5
 
   # 1/x chance for the cat to try and trigger a group event
   chance_of_group_event = 5
@@ -125,7 +125,7 @@ dev_tools = false
   outsider_litter_mates_chance = 0.1
 
   # maximum age difference allowed for cats to be romantic with each other
-  age_range = 40
+  age_range = 60
 
   # if true, disables the same-age group check
   override_same_age_group = false
@@ -380,7 +380,7 @@ dev_tools = false
 
 [pregnancy]
   # decides which roles can have kits
-  can_have_kits = ["leader", "deputy", "healer", "warrior", "mediator", "queen", "elder", "kittypet", "rogue", "loner"]
+  can_have_kits = ["apprentice", "medicine cat apprentice", "leader", "deputy", "healer", "warrior", "mediator", "queen", "elder", "kittypet", "rogue", "loner"]
 
   # cooldown for cats getting pregnant that applies after giving birth
   birth_cooldown = 6
@@ -390,7 +390,7 @@ dev_tools = false
   modded_primary_chance_mated = 60
 
   # 1/chance of kits, relationship and other factors will influence this chance. modded_ is used with modded litters
-  primary_chance_unmated = 130
+  primary_chance_unmated = 150
   modded_primary_chance_unmated = 100
 
   # 1/chance that a mated cat has an affair
@@ -404,7 +404,7 @@ dev_tools = false
   surrogate_rate = 1
 
   # 1/chance for cats to select a clanmate as a surrogate when possible
-  clanmate_surrogate_chance = 5
+  clanmate_surrogate_chance = 2
 
   # 1/chance for unmated cats to have a multi-sire litter with outside sires
   multi-sire_chance = 5
@@ -416,10 +416,10 @@ dev_tools = false
   half-clan_chance = 0.25
 
   # 1/chance that a phantom pregnancy will happen when cats fail to have a litter
-  false_pregnancy_chance = 500
+  false_pregnancy_chance = 70
 
   # 1/chance that a pregnancy will be hidden from the player until a cat gives birth
-  hidden_pregnancy_chance = 200
+  hidden_pregnancy_chance = 70
   
   # the base chance a cat who's been cheated on will help raise their mate's kits after an affair
   # by default, the chance is 40% and the range is from 0-100%, any value higher or lower will be capped
@@ -547,10 +547,10 @@ dev_tools = false
   base_permanent_condition = 90
 
   # kittypets will have a higher chance of having many rarer genes, even if not purebred
-  kittypet_gene_boost = false
+  kittypet_gene_boost = true
 
   # max age a new cat can generate as. Cannot be below starting value of senior age
-  max_age = 200
+  max_age = 180
 
 [cat_name_controls]
   # if changing prefixes is enabled, 1/chance for a cat to change their prefix when coming out as trans
@@ -670,19 +670,19 @@ dev_tools = false
 
   [roles.become_mediator_chances]
     # 1/chance that a cat will switch to mediator. rolls every moon, so keep it high.
-    warrior = 5000
-    elder = 400
+    warrior = 600
+    elder = 300
 
   [roles.become_queen_chances]
     # 1/chance that a cat will switch to queen. rolls every moon, so keep it high.
-    warrior = 4000
-    mediator = 7500
-    elder = 500
+    warrior = 600
+    mediator = 600
+    elder = 300
 
   [roles.become_healer_chances]
     # 1/chance that a cat will switch to mediator. rolls every moon, so keep it high.
-    warrior = 7500
-    apprentice = 1000
+    warrior = 600
+    apprentice = 300
 
   [roles."medicine cat apprentice"]
     # maximum number of medicine cat apprentices to full medicine cats (e.g. 4 adult medcats can have 2 apps total)
@@ -987,13 +987,13 @@ dev_tools = false
 
   # how many neighbouring clans are generated on clan creation. Must be at least 1
   # the game is also not built to handle more than 5 so issues may potentially arise with more
-  other_clans_range = [2, 5]
+  other_clans_range = [2, 3]
 
   # range of outsiders to generate upon Clan creation
   starting_outsiders = [0, 0]
 
   # range of cats to pick on quickstart (not counting the leader, deputy, and healer)
-  quickstart_cats = [4, 7]
+  quickstart_cats = [1, 7]
 
   # range of cats to pick on quickstart (not counting the leader, deputy, and healer) for neighbouring Clans in multiclan
   neighbourclan_cats = [4, 7]
@@ -1041,7 +1041,7 @@ dev_tools = false
   random_mutation = 150
   somatic_mutation = 200
   breakthrough = 50
-  dense_blotched = 50
+  dense_blotched = 10
   cryptic_tortie = 100
   sectoral_heterochromia = 200
   random_heterochromia = 250
@@ -1068,18 +1068,18 @@ dev_tools = false
   red = 4
   dilute = 2
   "dominant white" = 50
-  "white spotting" = 3
+  "white spotting" = 2
   "birman gloving" = 75
   "thai white" = 400
   salmiak = 300
-  colourpoint = 10
+  colourpoint = 6
   sepia = 20
   mocha = 300
   albino = 200
-  silver = 20
+  silver = 15
   solid = 2
   charcoal = 150
-  blotched = 3
+  blotched = 2
   ticked = 10
 
   "pink-eyed dilute" = 400
@@ -1162,7 +1162,7 @@ dev_tools = false
 
 [graduation]
   # minimum age required for a cat to graduate
-  min_graduating_age = 10
+  min_graduating_age = 7
 
   [graduation.max_apprentice_age]
     # max apprentice ages. after this, they're forcibly promoted
