@@ -249,7 +249,7 @@ class Cat:
         self.placement = None
         self.example = example
         self.thought = ""
-        self.next_thought_type: CatThought = CatThought.WHILE_ALIVE
+        self.next_thought_type: CatThought = None
         self.assign_thought()
 
         # conditions setup
@@ -850,11 +850,16 @@ class Cat:
         return Pelt.describe_appearance(self, short)
 
     def create_genelist(self, filter=True):
-        genelist = str(self.phenotype.PhenotypeOutput(self.phenotype.white_pattern, chimera=self.chimerapheno)) + \
-            "\n" + str(self.phenotype.ShowGenes(filter)) + "\n" + self.phenotype.FormatSomatic()
-        if (self.chimerapheno):
-            genelist += "\n\n" + str(self.chimerapheno.PhenotypeOutput(self.chimerapheno.white_pattern, chimera=self.chimerapheno)) + \
-            "\n" + str(self.chimerapheno.ShowGenes(filter))
+        if get_config("genetics_config.show_genotype"):
+            genelist = str(self.phenotype.PhenotypeOutput(self.phenotype.white_pattern, chimera=self.chimerapheno)) + \
+                "\n" + str(self.phenotype.ShowGenes(filter)) + "\n" + self.phenotype.FormatSomatic()
+            if (self.chimerapheno):
+                genelist += "\n\n" + str(self.chimerapheno.PhenotypeOutput(self.chimerapheno.white_pattern, chimera=self.chimerapheno)) + \
+                "\n" + str(self.chimerapheno.ShowGenes(filter))
+        else:
+            genelist = str(self.phenotype.PhenotypeOutput(self.phenotype.white_pattern, chimera=self.chimerapheno)) + "\n" + self.phenotype.FormatSomatic()
+            if (self.chimerapheno):
+                genelist += "\n\n" + str(self.chimerapheno.PhenotypeOutput(self.chimerapheno.white_pattern, chimera=self.chimerapheno))
 
         return genelist
 
@@ -1410,7 +1415,7 @@ class Cat:
         self.thought = None
         # default thought type
         if not thought_type:
-            if game.clan and self is game.clan.instructor:
+            if game.clan and self in [game.clan.instructor] + [clan.instructor for clan in game.clan.all_other_clans if clan.instructor]:
                 thought_type = CatThought.IS_GUIDE
             elif self.dead:
                 thought_type = CatThought.WHILE_DEAD
@@ -1478,9 +1483,9 @@ class Cat:
         """returns True if the cat can work, False if the cat cannot work"""
         if not self.temporary_conditions:
             return True
+
         return all(
-            condition.severity == "minor"
-            for condition in self.temporary_conditions
+            condition.severity == "minor" for condition in self.temporary_conditions
         )
 
     def retire_cat(self):

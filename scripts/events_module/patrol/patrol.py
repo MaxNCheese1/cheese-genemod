@@ -35,7 +35,7 @@ from scripts.events_module.text_pool_event import handle_consequences
 from scripts.events_module.text_pool_event.check_general_constraints import (
     passes_general_constraints,
 )
-from scripts.events_module.text_pool_event.event_retrieval import get_valid_event
+from scripts.events_module.text_pool_event.event_retrieval import get_valid_event, select_valid_other_clan
 from scripts.events_module.text_pool_event.find_involved_cats import find_cats
 from scripts.events_module.text_pool_event.text_pool_event import TextPoolEvent
 from scripts.game_structure import game
@@ -119,13 +119,8 @@ class Patrol:
         )
 
         # Choose other clan
-        all_options = game.clan.all_other_clans + [game.clan]
-        all_options.remove(self.clan)
-        if game.clan.all_other_clans and len(all_options) > 0:
-            self.other_clan = choice(all_options)
-        else:
-            self.other_clan = None
-
+        self.other_clan = select_valid_other_clan(self.clan)
+        
         # Find valid patrol
         self._load_patrols_and_set_patrol(patrol_type)
         self._create_needed_cats()

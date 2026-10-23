@@ -758,7 +758,7 @@ def handle_lost_cats_return(predetermined_cat_IDs: list = None, clan = game.clan
             if cat.dead or not cat.status.is_lost(clan.group_ID) or not cat.status.is_outsider:
                 continue
 
-            if "sterile" not in cat.permanent_conditions or game.clan.age - cat.permanent_condition["sterile"]["moon_start"] > -1:
+            if "sterile" not in cat.permanent_conditions or game.clan.age - cat.get_condition("sterile")["moon_start"] > -1:
                 eligible_cats.append(cat)
 
         if not eligible_cats:
@@ -1500,7 +1500,6 @@ def invite_new_cats(cat, clan=game.clan):
         if ratio < 0.75:
             base_chance = int(base_chance * ratio * 1.25)
 
-    reputation = 50
     reputation = clan.reputation
 
     # hostile
@@ -1900,15 +1899,17 @@ def attempt_outbreak(clan):
                 continue
 
             if condition.name in possible_infections:
-                possible_infections[condition.name] = min(
-                    0.9,
-                    (possible_infections[condition.name] + condition.infectiousness),
+                possible_infections[condition.name] = (
+                    possible_infections[condition.name] + condition.infectiousness
                 )
+
             else:
                 possible_infections[condition.name] = condition.infectiousness
 
     for infection in possible_infections:
-        possible_infections[infection] -= infection_prevention
+        possible_infections[infection] = min(
+            0.9, max(0.01, possible_infections[infection] - infection_prevention)
+        )
 
     # the cats who are allowed to get sick
     vulnerable_cats = list(filter(lambda _cat: _cat not in infectious_cats, clan_cats))

@@ -894,7 +894,7 @@ dev_tools = false
 
 [condition_related]
   # 10/chance an illness will occur
-  illness_chance = 270
+  illness_chance = 280
   classic_illness_chance = 500
 
   # if a cat has a permanent condition with defined seasonal risks, the above illness chance is divided by the modifier to determine if they get a seasonal risk
@@ -903,7 +903,7 @@ dev_tools = false
   perm_condition_modifier = 5
   
   # how much the mortality will decrease each moon that the cat has a condition
-  moonskip_mortality_reduction = 0.05
+  moonskip_mortality_reduction = 0.10
   excluded_from_mortality_reduction = ["redcough", "starving", "malnourished"]
 
   # duration of applied conditions is multiplied by this number
@@ -937,29 +937,29 @@ dev_tools = false
   # dictates the chance for cats to get various diseases in each season
   [condition_related.seasonal_chances]
     [condition_related.seasonal_chances.newleaf]
-      running_nose = 2
-      stomachache = 1
+      running_nose = 3
+      stomachache = 2
       tick_fever = 1
       ear_infection = 1
     [condition_related.seasonal_chances.greenleaf]
-      fleas = 2
-      stomachache = 1
+      fleas = 3
+      stomachache = 2
       heat_exhaustion = 3
       heat_stroke = 1
       tick_fever = 1
     [condition_related.seasonal_chances.leaf-fall]
-      stomachache = 1
+      stomachache = 2
       greencough = 1
       kittencough = 1
-      running_nose = 3
       ear_infection = 1
+      running_nose = 4
     [condition_related.seasonal_chances.leaf-bare]
-      stomachache = 1
+      stomachache = 2
       greencough = 3
-      running_nose = 1
+      running_nose = 2
       kittencough = 4
-      yellowcough = 3
       ear_infection = 1
+      yellowcough = 1
 
   [condition_related.seasonal_risks]
     [condition_related.seasonal_risks.newleaf]
@@ -984,6 +984,9 @@ dev_tools = false
 
   # If true, boosts the chance of rarer genes and breeds for founding cats
   use_special_roller = true
+
+  # can give a prior social group (loner, rogue, kittypet) to founders, which will override the founder backstory
+  founder_socials = ["clancat"]
 
   # how many neighbouring clans are generated on clan creation. Must be at least 1
   # the game is also not built to handle more than 5 so issues may potentially arise with more
@@ -1023,6 +1026,9 @@ dev_tools = false
     member = ["newborn", "kitten", "adolescent", "young adult", "adult", "senior adult", "senior"]
 
 [genetics_config]
+  # setting this to false will hide the genotype information of a cat
+  show_genotype = true
+
   # 1/chance for newly generated kittypets and other cats to be purebred
   kittypet_breed = 150
   other_breed = 1000
@@ -1150,6 +1156,7 @@ dev_tools = false
   rainbow_eyes = 10
   black_spotting = 15 # both this and peacock blue courtesy of mars from Create a Clan
   peacock_blue = 10
+  mineral_red = 15 # high rufousing = cinnabar/sulphur ; mid rufousing = jasper/sandstone ; low rufousing = citrine/calcite
 
 [tnr_mode]
   # chance for kittypets and other outsiders to generate as already spayed/neutered
@@ -1158,7 +1165,6 @@ dev_tools = false
   # chance for cats lost to Twolegs to be spayed/neutered. clan_tnr2 is for events not explicitly reminiscent of TNR programs
   clan_tnr = 0.99
   clan_tnr2 = 0.5
-  # sets what age is allowed to take each rank
 
 [graduation]
   # minimum age required for a cat to graduate
@@ -1260,17 +1266,17 @@ dev_tools = false
       [focus.hunting.buff.HUNTER]
         tier = 1
         prey_increase = 2
-      [focus.hunting.buff.SWIMMER]
+      [focus.hunting.buff.RUNNER]
         tier = 1
-        biome = ["beach", "wetlands"]
+        biome = ["plains", "desert"]
         injury_modifier = 2
       [focus.hunting.buff.CLIMBER]
         tier = 1
         biome = ["forest", "mountainous"]
         injury_modifier = 2
-      [focus.hunting.buff.RUNNER]
+      [focus.hunting.buff.SWIMMER]
         tier = 1
-        biome = ["plains", "desert"]
+        biome = ["beach", "wetlands"]
         injury_modifier = 2
       [focus.hunting.buff.DIGGER]
         tier = 1
@@ -1398,7 +1404,6 @@ dev_tools = false
   [focus.hoarding]
     # injury chance of each warrior(leader/deputy to get injured
     injury_chance_warrior = 25
-    injury_chance_healer = 35
 
     # illness chance of each warrior(leader/deputy) to get sick
     illness_chance = 35
@@ -1451,6 +1456,8 @@ dev_tools = false
 
     # how many moons earlier are cats healed
     moons_earlier_healed = 1
+
+    excluded_from_moons_earlier_healed = []
 
     [focus.rest_and_recover.buff]
       [focus.rest_and_recover.buff.HEALER]
@@ -1590,6 +1597,9 @@ dev_tools = false
   # determines when the freshkill pile amount is considered "full" or "excessive" for the purpose of events
   # the higher this number, the more freshkill is required before the pile is "full/excessive"
   base_event_trigger_factor = 4
+
+  # defines the amount of time it takes for freshkill to rot
+  time_to_rot = 3
 
   # defines the amount of prey a Clan begins with
   start_amount = 60
