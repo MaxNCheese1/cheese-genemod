@@ -55,7 +55,7 @@ def check_if_can_have_kits(cat, for_surrogate=False):
     # Including - age, dead status, having kits turned off.
     not_correct_age = (
         cat.age in [CatAge.NEWBORN, CatAge.KITTEN, CatAge.ADOLESCENT]
-        or cat.moons < 15
+        or cat.moons < 12
     )
     if not_correct_age or no_kits_allowed(cat) or cat.dead:
         return False
