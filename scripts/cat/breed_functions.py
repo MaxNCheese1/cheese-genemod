@@ -1091,10 +1091,9 @@ class Breed_generator:
 
         genoclass.furLength = ["l", "l"]
         
-        if random() < 0.95:
-            genoclass.karp = ["K", "K"]
-        elif random() < 0.80:
-            genoclass.karp = ["K", 'k']
+        for i in range(2):
+            if random() < 0.95:
+                genoclass.karp[i] = "K"
 
         genoclass.longtype = "long"
         
@@ -1377,10 +1376,9 @@ class Breed_generator:
 
         # karp + bleach + ghosting + satin + glitter
 
-        if random() < 0.1:
-            genoclass.karp = ["K", "K"]
-        elif random() < 0.1:
-            genoclass.karp[0] = "K"
+        for i in range(2):
+            if random() < 0.95:
+                genoclass.karp[i] = "K"
 
         if random() < 0.01:
             genoclass.bleach = ["lb", "lb"]
@@ -4000,7 +3998,7 @@ class Breed_checker:
     def Pixiebob(phenotype):
         if phenotype.length == "hairless" or phenotype.furtype != [""]:
             return False
-        if phenotype.eartype != "" or (not phenotype.tailtype or phenotype.manx[0] != "Ab") or phenotype.munch[0] != "mk":
+        if phenotype.eartype != "" or (phenotype.tailtype and phenotype.manx[0] != "Ab") or phenotype.munch[0] != "mk":
             return False
         
         if phenotype.fade != "" or phenotype.karp[0] == "K":
@@ -4009,7 +4007,7 @@ class Breed_checker:
             return False
         if phenotype.dilutemd[0] != "dm" or phenotype.pinkdilute[0] == "dp":
             return False
-        if phenotype.agouti[0] != "A" or (phenotype.bengsum > 3 or phenotype.soksum > 3):
+        if phenotype.agouti[0] != "A" or (phenotype.bengsum > 3):
             return False
 
         if phenotype.eumelanin[0] != "B" or 'O' in phenotype.sexgene or phenotype.dilute[0] != 'D' or phenotype.white[0] != 'w':

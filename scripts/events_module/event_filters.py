@@ -309,10 +309,11 @@ def event_for_tags(tags: list, cat, clan=CatGroup.PLAYER_CLAN_ID, other_cat=None
     return True
 
 
-def event_for_poi(pois: dict[str, list], clan=None) -> bool:
+def event_for_poi(pois: dict[str, list], clan=None, chosen_poi: Optional[str] = None) -> bool:
     """
     Checks if the Clan has a POI matching pois
     :param pois: possible points of interest
+    :param chosen_poi: If there's a prechosen POI to check these constraints against, include it here
     :return: True if there's a match, False if not
     """
     if all(not value for value in pois.values()):
@@ -324,7 +325,10 @@ def event_for_poi(pois: dict[str, list], clan=None) -> bool:
 
     return bool(
         get_poi_from_constraints(
-            pois.get("name"), pois.get("tags"), pois.get("category"), clan.group_ID
+            pois.get("name") if not chosen_poi else [chosen_poi],
+            pois.get("tags"),
+            pois.get("category"),
+            clan.group_ID,
         )
     )
 
@@ -1600,6 +1604,7 @@ def _get_cats_from_group(
         return cat_list
 
     is_exclusionary = _check_for_exclusionary_value(groups)
+    main_clan = main_clan.group_ID if main_clan else None
 
     groups = [x.replace("-", "") for x in groups]
     remaining_tags = groups.copy()
@@ -1639,18 +1644,18 @@ def _get_cats_from_group(
 
         elif tag == "player_clan":  # checks if the cat is in the main_cat's clan
             if is_exclusionary:
-                cat_list = [c for c in cat_list if c.status.group_ID != main_clan.group_ID]
+                cat_list = [c for c in cat_list if c.status.group_ID != main_clan]
             else:
-                cat_list = [c for c in cat_list if c.status.group_ID == main_clan.group_ID]
+                cat_list = [c for c in cat_list if c.status.group_ID == main_clan]
             remaining_tags.remove(tag)
 
         elif tag == "other_clan":  # checks if the cat isn't in the main_cat's clan
             if is_exclusionary:
                 cat_list = [
-                    c for c in cat_list if c.status.group_ID == main_clan.group_ID or c.status.group not in [CatGroup.PLAYER_CLAN, CatGroup.OTHER_CLAN]]
+                    c for c in cat_list if c.status.group_ID == main_clan or c.status.group not in [CatGroup.PLAYER_CLAN, CatGroup.OTHER_CLAN]]
             else:
                 cat_list = [
-                    c for c in cat_list if c.status.group_ID != main_clan.group_ID and c.status.group in [CatGroup.PLAYER_CLAN, CatGroup.OTHER_CLAN]]
+                    c for c in cat_list if c.status.group_ID != main_clan and c.status.group in [CatGroup.PLAYER_CLAN, CatGroup.OTHER_CLAN]]
             remaining_tags.remove(tag)
 
     # checks all the plain group tags that will match the CatGroup enums

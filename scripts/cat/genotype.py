@@ -906,31 +906,12 @@ class Genotype:
         self.EyeColourFinder()
 
     def BreedGenerator(self, special=None):
-
-        common_breeds = [
-            "Abyssinian", "American Burmese/Bombay", "American Curl", "American Shorthair", "Asian/Burmese", 
-            "Bengal", "Birman", "British", "Chartreux", "Cornish Rex", "Devon Rex", "Egyptian Mau", 
-            "Havana", "Japanese Bobtail", "Korat", "LaPerm", "Lykoi", "Maine Coon", "Manx", "Norwegian Forest cat", 
-            "Ocicat", "Oriental/Siamese", "Persian/Exotic", "Ragdoll", "Russian", "Selkirk Rex", "Siberian", 
-            "Singapura", "Sphynx", "Tonkinese", "Turkish"
-        ]
-        medium_breeds = [
-            "American Bobtail", "Australian Mist", "Bambino", "Chausie", "Donskoy", "European Shorthair", "German Rex",
-            "Highlander", "Khao Manee", "Kurilian Bobtail", "Mandalay/Burmese", "Munchkin", "Peterbald", "Pixie-Bob",
-            "Ragamuffin", "Savannah", "Snowshoe", "Sokoke", "Thai", "Toybob", "Toyger"
-        ]
-        rare_breeds = [
-            "Aphrodite", "Arabian Mau", "Brazilian Shorthair", "Cheetoh", "Ceylon", "Foldex", "Gaelic Fold", 
-            "German Longhair", "Kanaani", "Karelian Bobtail", "Kinkalow", "Lambkin", "Lin-Qing Lion cat", "Mekong Bobtail", 
-            "Minuet", "New Zealand", "Serengeti", "Skookum", "Tennessee Rex", "Ural Rex"
-        ]
-
-        selected_breed = choice(choice([rare_breeds, medium_breeds, medium_breeds, medium_breeds, medium_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds]))
+        selected_breed = choice(choices([self.odds["rare_breeds"], self.odds["medium_breeds"], self.odds["common_breeds"]], weights=[1, 5, 14], k=1)[0])
 
         if self.ban_genes:
             while selected_breed in ["Lykoi", "Manx", "Sphynx", "Bambino", "Donskoy", "Munchkin", "Peterbald", "Foldex", "Gaelic Fold",
             "Kinkalow", "Lambkin", "Minuet", "Skookum"]:
-                selected_breed = choice(choice([rare_breeds, medium_breeds, medium_breeds, medium_breeds, medium_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds, common_breeds]))
+                selected_breed = choice(choices([self.odds["rare_breeds"], self.odds["medium_breeds"], self.odds["common_breeds"]], weights=[1, 5, 14], k=1)[0])
         
         gen = breed_functions["generator"][selected_breed]
 
@@ -2164,14 +2145,15 @@ class Genotype:
     def GenerateSomatic(self):
         self.somatic["base"] = choice(['Somatic/leftface', 'Somatic/rightface', "EYELINER_MAX_L", "EYELINER_MAX_R", "EYESPOT_L", "EYESPOT_R", 
                                     "HELMET",
-                                    "BEARD_FULL", "BEARD_HIGH", 
+                                    'underbelly1', "BEARD", "BEARD_FULL", "BEARD_HIGH", 
                                     'Somatic/tail', 
-                                    'underbelly1', "BEARD", "BELLY", "BELLY_HIGH", "BELLY_MID", "BELLY_SMALL", "BIB",
+                                    "BELLY", "BELLY_HIGH", "BELLY_MID", "BELLY_SMALL", "BIB", "TEARDROP",
                                     'right front bicolour2', 'left front bicolour2', 
                                     'right back bicolour2', 'left back bicolour2', 
                                     'right front bicolour1', 'left front bicolour1', 
                                     'right back bicolour1', 'left back bicolour1', 
-                                    "LEFTEAR", "RIGHTEAR", "BACKSPOT", "SADDLE_SMALL", "TAILTIP"])
+                                    "LEFTEAR", "RIGHTEAR", "BACKSPOT", "SADDLE_SMALL", 
+                                    "TAILTIP", "TAIL_HIGH_RING", "TAIL_MID", "TAIL_REVERSE_HALF", "TAIL_REVERSE_MIN"])
 
         possible_mutes = {
         "furtype" : ["wirehair", "laperm", "cornish", "urals", "tenn", "fleece", "sedesp"],
@@ -2239,7 +2221,7 @@ class Genotype:
             self.somatic = {}
             return
 
-        top_patches = ['Somatic/leftface', 'Somatic/rightface', 'Somatic/tail', "LEFTEAR", "RIGHTEAR", "BACKSPOT", "SADDLE_SMALL", "HELMET", "EYESPOT_L", "EYESPOT_R"]
+        top_patches = ['Somatic/leftface', 'Somatic/rightface', 'Somatic/tail', "LEFTEAR", "RIGHTEAR", "BACKSPOT", "SADDLE_SMALL", "HELMET", "EYESPOT_L", "EYESPOT_R", "TAIL_MID", "TAIL_REVERSE_HALF", "TAIL_REVERSE_MIN"]
         if self.white[1] in ['ws', 'wt'] and self.somatic["base"] not in top_patches:
             self.somatic["base"] = choice(top_patches)
         
@@ -2286,7 +2268,6 @@ class Genotype:
             "EYESPOT_R": "face",
             "HELMET": "head",
             "Somatic/tail" : 'tail',
-            "underbelly1" : 'underbelly',
             'right front bicolour2' : 'front leg', 
             'left front bicolour2' : 'front leg', 
             'right back bicolour2' : 'back leg', 
@@ -2300,12 +2281,18 @@ class Genotype:
             "BACKSPOT": "back",
             "SADDLE_SMALL": "back",
             "TAILTIP": "tail tip",
+            "TAIL_HIGH_RING": "tail",
+            "TAIL_MID": "tail",
+            "TAIL_REVERSE_HALF": "tail",
+            "TAIL_REVERSE_MIN": "tail base",
+            "underbelly1" : 'underbelly',
             "BEARD": "chin",
             "BELLY": "belly",
             "BELLY_HIGH": "belly",
             "BELLY_MID": "belly",
             "BELLY_SMALL": "belly",
             "BIB": "chest",
+            "TEARDROP": 'chest',
             "BEARD_FULL": "chest",
             "BEARD_HIGH": "chest"
         }

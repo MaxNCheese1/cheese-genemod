@@ -1058,6 +1058,9 @@ def create_new_cat(
             moons = randint(120, 130)
         else:
             moons = randint(6, 120)
+    
+    if moons:
+        moons = min(moons, get_config("cat_generation.max_age"))
 
     # setting rank
     if not rank and not outside:
@@ -1075,7 +1078,7 @@ def create_new_cat(
     # need to get actual age enum
     age = CatAge.SENIOR
     for key_age in Cat.age_moons.keys():
-        if moons in range(Cat.age_moons[key_age][0], min(Cat.age_moons[key_age][1], get_config("cat_generation.max_age")) + 1):
+        if moons in range(Cat.age_moons[key_age][0], Cat.age_moons[key_age][1] + 1):
             age: CatAge = key_age
             break
 
@@ -1238,15 +1241,6 @@ def create_new_cat(
         else:
             chance = get_config("cat_generation.base_permanent_condition")
 
-        if not is_parent and get_clan_setting('tnr_mode') and moons > 5:
-            kittypet_n = get_config("tnr_mode.kittypet_neuter")
-            loner_n = get_config("tnr_mode.loner_tnr")
-            if original_social == CatSocial.KITTYPET and random() < kittypet_n:
-                gain_permanent_condition(new_cat, "sterile", False)
-            if original_social in (CatSocial.LONER, CatSocial.ROGUE) and random() < loner_n:
-                gain_permanent_condition(new_cat, "sterile", False)
-                new_cat.pelt.scars = (*new_cat.pelt.scars, "TNR")
-                new_cat.pelt.rebuild_sprite = True
         if not int(random() * chance):
             possible_conditions = []
             for condition in PERMANENT_CONDITIONS:
@@ -1350,10 +1344,11 @@ def gather_cat_objects(
         # SMALL CAT GROUPS
         found_cat_list = set()
         if re.match(r"n_c:[0-9]+", abbr):  # new_cats
-            index = re.match(r"n_c:([0-9]+)", abbr).group(1)
-            index = int(index)
-            if index < len(event.new_cats):
-                found_cat_list.update(event.new_cats[index])
+            if event:
+                index = re.match(r"n_c:([0-9]+)", abbr).group(1)
+                index = int(index)
+                if index < len(event.new_cats):
+                    found_cat_list.update(event.new_cats[index])
         # OVERALL CLAN CATS
         elif abbr == "clan":
             found_cat_list.update(clan_cats)

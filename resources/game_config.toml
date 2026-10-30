@@ -361,6 +361,23 @@ dev_tools = false
       comfort = 10
       trust = 10
 
+  # relationship values between new kits and the clan's permanent queens
+  [new_cat.queen_buff]
+  
+    [new_cat.queen_buff.kit_to_queen]
+      like = 15
+      respect = 15
+      comfort = 20
+      trust = 20
+      wobble = 15 # range by which each can vary from kit to kit (eg. 10 means it can be up to 10 below or 10 above the default value)
+
+    [new_cat.queen_buff.queen_to_kit]
+      like = 10
+      respect = 5
+      comfort = 10
+      trust = 5
+      wobble = 10 # range by which each can vary from kit to kit (eg. 10 means it can be up to 10 below or 10 above the default value)
+
   [new_cat.rel_buff]
     # default relationships buff for new cats relationships to other cats in the clan
     [new_cat.rel_buff.new_to_clan_cat]
@@ -1032,6 +1049,24 @@ dev_tools = false
   # 1/chance for newly generated kittypets and other cats to be purebred
   kittypet_breed = 150
   other_breed = 1000
+  
+  # not necessarily meant to be indicative of irl breed rarity
+  common_breeds = [
+    "Abyssinian", "American Burmese/Bombay", "American Curl", "Asian/Burmese", "Bengal", "Birman", "British", "Chartreux", 
+    "Cornish Rex", "Devon Rex", "Egyptian Mau", "Havana", "Japanese Bobtail", "Korat", "LaPerm", "Lykoi", "Maine Coon", 
+    "Manx", "Norwegian Forest cat", "Oriental/Siamese", "Persian/Exotic", "Ragdoll", "Russian", "Selkirk Rex", 
+    "Siberian", "Sphynx", "Tonkinese", "Turkish"
+  ]
+  medium_breeds = [
+    "American Bobtail", "American Shorthair", "Australian Mist", "Bambino", "Chausie", "Donskoy", "European Shorthair", 
+    "German Rex", "Highlander", "Khao Manee", "Kurilian Bobtail", "Mandalay/Burmese", "Munchkin", "Ocicat", "Peterbald", 
+    "Pixie-Bob", "Ragamuffin", "Savannah", "Singapura", "Snowshoe", "Sokoke", "Thai", "Toybob", "Toyger"
+  ]
+  rare_breeds = [
+    "Aphrodite", "Arabian Mau", "Brazilian Shorthair", "Cheetoh", "Ceylon", "Foldex", "Gaelic Fold", 
+    "German Longhair", "Kanaani", "Karelian Bobtail", "Kinkalow", "Lambkin", "Lin-Qing Lion cat", "Mekong Bobtail", 
+    "Minuet", "New Zealand", "Serengeti", "Skookum", "Tennessee Rex", "Ural Rex"
+  ]
 
   # when gene boost is applicable, chance will be divided by this value and rounded up. Eg. for chocolate it would be 20/1.5 = 14
   boost_value = 1.5

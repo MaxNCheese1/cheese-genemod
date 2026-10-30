@@ -2596,7 +2596,7 @@
         },
         "r_c": {
             "age": [
-                "any"
+                "-newborn"
             ],
             "status": [
                 "any"
@@ -2648,7 +2648,7 @@
         },
         "r_c": {
             "age": [
-                "any"
+                "-newborn"
             ],
             "status": [
                 "any"
@@ -2728,7 +2728,7 @@
         },
         "r_c": {
             "age": [
-                "any"
+                "-newborn"
             ],
             "status": [
                 "any"
@@ -10071,7 +10071,7 @@
         },
         "r_c": {
             "status": [
-                "any"
+                "-newborn"
             ]
         },
         "relationships": [
@@ -17994,6 +17994,12 @@
             ],
             "dies": false
         },
+        "injury": [
+            {
+              "cats": ["m_c"],
+              "injuries": ["stinky"]
+            }
+        ],
         "relationships": [
             {
                 "cats_from": [
@@ -18031,6 +18037,12 @@
         "r_c": {
             "group": ["player_clan"]
         },
+        "injury": [
+            {
+              "cats": ["m_c"],
+              "injuries": ["stinky"]
+            }
+        ],
         "relationships": [
             {
                 "cats_from": ["r_c"],
